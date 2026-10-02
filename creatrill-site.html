@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreatRilL Website</title>
+    <link rel="icon" href="siteicon.png" type="image/x-icon">
+    <!-- Подключение иконок FontAwesome для соцсетей -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Подключение стороннего шрифта Etude Noire */
+        @font-face {
+            font-family: 'Etude Noire';
+            src: url('EtudeNoire.woff2') format('woff2'),
+                 url('EtudeNoire.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* Базовый тёмно-синий фон */
+            background-color: #0d1b2a;
+            font-family: 'Etude Noire', 'Segoe UI', Tahoma, sans-serif; 
+            color: white;
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ========================================================================= */
+        /* 1. АНИМИРОВАННЫЙ ФОНОВЫЙ СЛОЙ С PNG- КАРТИНКОЙ                            */
+        /* ========================================================================= */
+        .animated-bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            
+            background-image: url('background.png'); 
+            
+            background-size: 40%;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            /* Плавная бесконечная анимация мигания (10 секунд на один цикл) */
+            animation: slowPulseImage 5s ease-in-out infinite alternate;
+        }
+
+        /* Анимация медленного мигания картинки (прозрачность + яркость) */
+        @keyframes slowPulseImage {
+            0% {
+                opacity: 0.15;
+                filter: brightness(0.6);
+                transform: scale(0.7);
+            }
+            50% {
+                opacity: 0.55;
+                filter: brightness(1.1);
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 0.15;
+                filter: brightness(0.6);
+                transform: scale(0.8);
+            }
+        }
+
+        /* Дополнительный атмосферный анимированный градиент на фоне */
+        .animated-bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(41, 117, 199, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(119, 179, 248, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 50% 50%, rgba(10, 30, 60, 0.4) 0%, transparent 70%);
+            
+            animation: slowPulseGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes slowPulseGlow {
+            0% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0.9;
+                transform: scale(1.3);
+            }
+        }
+
+        /* ========================================================================= */
+        /* 2. ЗАГОЛОВОК С АНИМАЦИЕЙ ПОЯВЛЕНИЯ СВЕРХУ                                 */
+        /* ========================================================================= */
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+            text-align: center;
+
+            /* Подключение анимации появления сверху */
+            animation: slideInDown 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Ключевые кадры появления заголовка */
+        @keyframes slideInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-60px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========================================================================= */
+        /* 3. СТЕКЛЯННОЕ ОКНО С АНИМАЦИЕЙ ПОЯВЛЕНИЯ СНИЗУ                             */
+        /* ========================================================================= */
+        .glass-square {
+            width: 350px;
+            height: 450px;
+            background: rgba(10, 25, 45, 0.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(119, 179, 248, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+
+            /* Подключение анимации появления снизу */
+            animation: slideInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Ключевые кадры появления окна */
+        @keyframes slideInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Кнопки главного меню */
+        .glass-btn {
+            width: 75%;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(119, 179, 248, 0.1);
+            border: 1px solid rgba(119, 179, 248, 0.25);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .glass-btn:hover {
+            background: rgba(119, 179, 248, 0.3);
+            border-color: rgba(119, 179, 248, 0.5);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Оверлей всплывающего окна */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-window {
+            position: relative;
+            width: 90%;
+            max-width: 500px;
+            background: rgba(7, 27, 49, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            
+            transform: scale(0.8) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.active .modal-window {
+            transform: scale(1) translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+            transform: scale(1.2) rotate(90deg);
+        }
+
+        .modal-header {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding-bottom: 10px;
+        }
+
+        .modal-body {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #ddd;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .socials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            padding-top: 10px;
+        }
+
+        .social-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .social-card i, .social-card img {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .social-card span {
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .social-card:hover {
+            opacity: 1;
+            background: rgba(41, 117, 199, 0.3);
+            border-color: rgba(41, 117, 199, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Анимированное фоновое PNG изображение -->
+    <div class="animated-bg-image"></div>
+    <!-- Дополнительный анимированный светящийся слой -->
+    <div class="animated-bg-gradient"></div>
+
+    <h1>CreatRilL Website</h1>
+
+    <!-- Главный стеклянный квадрат -->
+    <div class="glass-square">
+        <button class="glass-btn" onclick="openModal('info')">📋 Информация</button>
+        <button class="glass-btn" onclick="openModal('games')">💼 Проекты</button>
+        <button class="glass-btn" onclick="openModal('socials')">💻 Соцсети</button>
+        <button class="glass-btn" onclick="openModal('socialslc')">✉️ Связь со мной</button>
+        <button class="glass-btn" onclick="openModal('FAQ')">⁉️ FAQ</button>
+    </div>
+
+    <!-- Всплывающее окно (Модалка) -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal-window">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <h2 class="modal-header" id="modalTitle">Заголовок</h2>
+            <div class="modal-body" id="modalBody">
+                <!-- Контент подставляется динамически -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Данные для всплывающих окон
+        const modalData = {
+            info: {
+                title: "Информация:",
+                content: `
+                    <p>Я (CreatRilL) являюсь разработчиком видеоигр.</p>
+                    <br>
+                    <p>Расскажу немного о себе. Я увлекаюсь разработкой игр с 2023 года. Родился 22 мая 2012 года в Беларуси (конкретный город не озвучу). В том числе я увлекаюсь созданием музыки. Начинал путь разработчика до 2024 года с покет кода. Позже изучил Clickteam Fusion, на котором я начал делать проекты более качественными. И за это время я увлёкся реальным программированием, и хочу пересесть на Godot.</p>
+                `
+            },
+            FAQ: {
+                title: "FAQ:",
+                content: `
+                    <p>Вопросы:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>Когда выйдет Пять Ночей с Барбоскинами 2?</strong> Пока точно неизвестна дата, но выйдет ориентировочно в 2027-2028 году.</li>
+                        <li><strong>Где вы создаете музыку?</strong> Я создаю музыку в FL Studio 24.</li>
+                        <li><strong>Какие плагины вы используете в музыке?</strong> Я использую много разных плагинов. Но в основном я использую: <strong>Для сведения:</strong> Fabfilter Pro Q4 (эквализация), Fabfilter Pro C2 (компрессия), VanhallaDelay и Fruity Delay 2/3 (delay), Vanhalla VintageVerb/FutureVerb (эхо), soundgoodiser (редко использую, в основном для насыщения), Fruity Peak Controller (сайдчейн).
+                            <strong>Для мелодии и эффектов:</strong> Nexus, Albino3, Diva, z3ta+, TRINITY, Serum, Spire</li>
+                        <li><strong>Где вы создаёте графику?</strong> В Photoshop и Aseprite.</li>
+                        <li><strong>Разработка игр и музыки, это ваши единственные хобби?</strong> Скорее то, что вы сейчас назвали, не просто хобби для меня - а основное дело. Но помимо этого я увлекаюсь рисованием и созданием разных сюжетов.</li>
+                        <li><strong>Какие игры планируете выпускать в будущем?</strong> Пока подержу это в секрете. Но уже известно, что я планирую развивть серию игр "FAIWOP".</li>
+                        <li><strong>Какими играми/сериалами/фильмами вы вдохновляетесь?</strong> Из фильмов пока я ничего не смотрел, но накануне хочу посмотреть парочку. Отчасти вдохновляюсь своим любимым сериалом Рик и Морти. А из игр могу особенно подметить Deltarune, Undertale, Krater (из за своих саундтреков), Detroid, Machinarium, Super Meat Boy, Terraria.</li>
+                        <li><strong>У вас есть любимые мультиплеерные/кооп игры?</strong> Да, конечно! Их хоть не особо и много, но про них я все равно расскажу. Из мультиплеерныж игр мне понравилось REPO, Buckshot Roulete, Machine Party, Content Warning, VR Chat.
+                            Соревновательные игры по типу CS2, Roblox и Minecraft мне не особо заходят (хоть и майнкрафт по большей части песочница, чем мультиплеерная игра/кооп). Я у подобных игр почти всегда замечал неадекватное комьюнити, не знающее границ в интернете. Поэтому у меня и отбивается желание играть в такие игры самому. Пойти с кем либо я только за! но по возможности и настроению, хорошо?)</li>
+                        <li><strong>Кто вам помогает в тестировании?</strong> Много кто, но особенно подмечу Владимира Михайлова, Моныча (Луганского Александра), catsaily (Александр), Dav (Давулетчин Андрей).</li>
+                        <li><strong>Кому вы хотите выразить благодарность?</strong> Всем тем, кто играет в мои видеоигры и интересуется моей деятельностью. Отдельная благодарность: Family Kvass, Adeliskiss (Адель), Dav (Давулетчин Андрей), Владимир Михайлов, catsaily (Александр), Моныча (Луганского Александра).</li>
+                    </ul>
+                `
+            },
+            games: {
+                title: "Проекты:",
+                content: `
+                    <p>Список текущих игр:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>1.</strong> Пять Ночей с Барбоскинами</li>
+                        <li><strong>2.</strong> Ship Ball</li>
+                        <li><strong>3.</strong> TNIE: FIGHT</li>
+                        <li><strong>4.</strong> Base Defense</li>
+                        <li><strong>5.</strong> House Creator</li>
+                        <li><strong>6.</strong> Country Enemies (отменено)</li>
+                    </ul>
+                    <br>
+                    <p>Список скорых к релизу игр:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>1.</strong> Поле Чудес</li>
+                        <li><strong>2.</strong> FAIWOP (серия игр)</li>
+                        <li><strong>3.</strong> Новогодние приключения (серия игр)</li>
+                        <li><strong>4.</strong> Пять Ночей с Барбоскинами 2 и 3</li>
+                    </ul>
+                `
+            },
+            socials: {
+                title: "Соцсети:",
+                content: `
+                    <div class="socials-grid">
+                        <a href="https://www.youtube.com/@CreatRilL" target="_blank" class="social-card">
+                            <i class="fab fa-youtube" style="color: #FF0000;"></i>
+                            <span>YouTube</span>
+                        </a>
+                        <a href="https://gamejolt.com/@CreatRilL-RaivezKirill" target="_blank" class="social-card">
+                            <i class="fas fa-bolt" style="color: #CCFF00;"></i>
+                            <span>GameJolt</span>
+                        </a>
+                        <a href="https://creatrill.itch.io/" target="_blank" class="social-card">
+                            <i class="fab fa-itch-io" style="color: #FA5C5C;"></i>
+                            <span>Itch.io</span>
+                        </a>
+                        <a href="https://creatrill.newgrounds.com" target="_blank" class="social-card">
+                            <i class="fas fa-skull" style="color: #FFA500;"></i>
+                            <span>Newgrounds</span>
+                        </a>
+                        <a href="https://t.me/tgk_creatrill" target="_blank" class="social-card">
+                            <i class="fab fa-telegram" style="color: #24A1DE;"></i>
+                            <span>Telegram</span>
+                        </a>
+                        <a href="https://discord.com/invite/mtz8UxtQxM" target="_blank" class="social-card">
+                            <i class="fab fa-discord" style="color: #5865F2;"></i>
+                            <span>Discord</span>
+                        </a>
+                        <a href="https://soundcloud.com/creatrill" target="_blank" class="social-card">
+                            <i class="fab fa-soundcloud" style="color: #FF5500;"></i>
+                            <span>SoundCloud</span>
+                        </a>
+                        <a href="https://www.twitch.tv/raivezkirill" target="_blank" class="social-card">
+                            <i class="fab fa-twitch" style="color: #971AFF;"></i>
+                            <span>Twitch</span>
+                        </a>
+                        <a href="https://steamcommunity.com/id/raivezkirill/" target="_blank" class="social-card">
+                            <i class="fab fa-steam" style="color: #6786CD;"></i>
+                            <span>Steam</span>
+                        </a>
+                    </div>
+                `
+            },
+            socialslc: {
+                title: "Связь со мной:",
+                content : `
+                <p>Связывайтесь со мной по делу!</p>
+                    <div class="socials-grid">
+                        <a href="https://t.me/raivezkirill" target="_blank" class="social-card">
+                            <i class="fab fa-telegram" style="color: #24A1DE;"></i>
+                            <span>Telegram</span>
+                        </a>
+                        <a href="https://vk.ru/id863865274" target="_blank" class="social-card">
+                            <i class="fab fa-vk" style="color: #3636FF;"></i>
+                            <span>VK Page</span>
+                        </a>
+                        <a href="https://discord.com/users/1215687496973951066" target="_blank" class="social-card">
+                            <i class="fab fa-discord" style="color: #5865F2;"></i>
+                            <span>Discord</span>
+                        </a>
+                        <a href="" target="_blank" class="social-card">
+                            <i class="fas fa-envelope" style="color: #FFFFFF;"></i>
+                            <span>По почте</span>
+                        </a>
+                    </div>
+                `
+            }
+        };
+
+        const overlay = document.getElementById('modalOverlay');
+        const titleEl = document.getElementById('modalTitle');
+        const bodyEl = document.getElementById('modalBody');
+
+        function openModal(key) {
+            if (modalData[key]) {
+                titleEl.textContent = modalData[key].title;
+                bodyEl.innerHTML = modalData[key].content;
+                overlay.classList.add('active');
+            }
+        }
+
+        function closeModal() {
+            overlay.classList.remove('active');
+        }
+
+        function closeModalOnOverlay(e) {
+            if (e.target === overlay) {
+                closeModal();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
